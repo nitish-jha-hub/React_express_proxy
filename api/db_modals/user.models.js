@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
-    name: String,
+    name: {type : String, required: true, unique : true,},
     // we can also add validation here like below
     email: {
-        type: String, required: true, unique: true,
+        type: String, required: true, index: true , unique: true ,
         // Email validation
         validate(value) {
             if (!value.match(/^[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+$/)) {
@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema({
     },
 
     password: {
-        type: String, required: true, minlength: 5, maxlength: 101, trim: true, validate(value) {
+        type: String, unique : true ,required: true, minlength: 5, maxlength: 101, trim: true, validate(value) {
             if (value.toLowerCase().includes('password')) {
                 throw new Error('Password cannot contain "password"')
             }

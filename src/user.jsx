@@ -1,4 +1,54 @@
+import './assets/style_css/user.css'
+import { useState } from 'react'
 const User = () => {
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [rePassword, setRePassword] = useState('')
+
+    const handlechange = (e) => {
+        if(e.target.name == 'name'){
+            setName(e.target.value)
+        }
+        else if(e.target.name == 'email'){
+            setEmail(e.target.value)
+        }
+        else if(e.target.name == 'password'){
+            setPassword(e.target.value)
+        }
+        else if(e.target.name == 'rePassword'){
+            setRePassword(e.target.value)
+        }
+    };
+
+    const handleSubmit =async() => {
+        console.log(name)
+        console.log(email)
+        console.log(password)
+        console.log(rePassword)
+
+        if(password != rePassword){
+            alert('Password and Re-Password not match')
+        }
+        else{
+            let res = await fetch('http://localhost:3000', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    password: password
+                })
+            })
+            let data = await res.text()
+            console.log(data)
+            alert(data)
+        }
+    }
+
+
     return (
         <section className="vh-100 bg-image"
         style={{"background-image": "url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp')"}} >
@@ -13,22 +63,22 @@ const User = () => {
                                     <form>
 
                                         <div className="form-outline mb-4">
-                                            <input type="text" id="form3Example1cg" className="form-control form-control-lg" />
+                                            <input onChange={handlechange} name='name' type="text" id="form3Example1cg" className="form-control form-control-lg" />
                                             <label className="form-label" htmlFor="form3Example1cg">Your Name</label>
                                         </div>
 
                                         <div className="form-outline mb-4">
-                                            <input type="email" id="form3Example3cg" className="form-control form-control-lg" />
+                                            <input onChange={handlechange} name='email'  type="email" id="form3Example3cg" className="form-control form-control-lg" />
                                             <label className="form-label" htmlFor="form3Example3cg">Your Email</label>
                                         </div>
 
                                         <div className="form-outline mb-4">
-                                            <input type="password" id="form3Example4cg" className="form-control form-control-lg" />
+                                            <input onChange={handlechange} name='password'  type="password" id="form3Example4cg" className="form-control form-control-lg" />
                                             <label className="form-label" htmlFor="form3Example4cg">Password</label>
                                         </div>
 
                                         <div className="form-outline mb-4">
-                                            <input type="password" id="form3Example4cdg" className="form-control form-control-lg" />
+                                            <input onChange={handlechange} name='rePassword'  type="password" id="form3Example4cdg" className="form-control form-control-lg" />
                                             <label className="form-label" htmlFor="form3Example4cdg">Repeat your password</label>
                                         </div>
 
@@ -40,7 +90,7 @@ const User = () => {
                                         </div>
 
                                         <div className="d-flex justify-content-center">
-                                            <button type="button"
+                                            <button type="button" onClick={handleSubmit}
                                                 className="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
                                         </div>
 

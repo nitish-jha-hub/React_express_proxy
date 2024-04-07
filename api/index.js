@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import db_connect from './db_connect/db_connection.js';
 import {User} from './db_modals/user.models.js';
 // require('dotenv').config()
+import cors from 'cors';
 
 // defalult library actions
 const app = express();
@@ -13,17 +14,23 @@ app.use(bodyParser.json());
 // Nitish : use of below line
 // app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(cors({
+    origin: '*'
+}));
+
 app.get('/', async (req, res) => {
     db_connect();
     const alluser = await User.find();
     console.log(alluser);
-    res.send('Hello World! from api/index file' + JSON.stringify(alluser));
+    // res.send('Hello World! from api/index file' + JSON.stringify(alluser));
+    res.send(alluser);
 });
 
 // console.log("hi" + process.env.REACT_APP_API_KEY)
 app.post('/', async (req, res) => {
     await db_connect();
-    console.log(req.body, typeof (req.body));
+    console.log(req.body);
+    // console.log(req.body, typeof (req.body));
     const a = new User({
         name : req.body.name,
         email : req.body.email,

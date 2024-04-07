@@ -9,7 +9,7 @@ import { createBrowserRouter, RouterProvider, } from "react-router-dom";
 const variable_router = createBrowserRouter([
   {
     path: "/",
-    element: <><App/><h1>Home</h1></>,
+    element: <><App/><User/></>,
   },
   {
     path: "/user",
