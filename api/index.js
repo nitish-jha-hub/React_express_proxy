@@ -4,11 +4,14 @@ import express from 'express'; // ES6 //not working in node.js which is not supp
 import bodyParser from 'body-parser';
 import db_connect from './db_connect/db_connection.js';
 import {User} from './db_modals/user.models.js';
+// require('dotenv').config()
 
 // defalult library actions
 const app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+
+// Nitish : use of below line
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', async (req, res) => {
     db_connect();
@@ -17,6 +20,7 @@ app.get('/', async (req, res) => {
     res.send('Hello World! from api/index file' + JSON.stringify(alluser));
 });
 
+// console.log("hi" + process.env.REACT_APP_API_KEY)
 app.post('/', async (req, res) => {
     await db_connect();
     console.log(req.body, typeof (req.body));
